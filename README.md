@@ -1,4 +1,4 @@
-s# Kairos
+# Kairos
 > Pay your tuition at the right time — not just on time.
 
 Exchange rates change daily. For international students paying large sums like tuition, even a small shift can mean hundreds to thousands of dollars lost. Kairos predicts the optimal day to pay based on your deadline and home currency, and surfaces the recommendation directly on your payment portal.
