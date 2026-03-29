@@ -52,12 +52,14 @@ def estimate_savings(amount_usd: float, today_rate: float, optimal_rate: float) 
     Higher rate = student gets more home currency per USD spent = cheaper for them.
     Savings = how much less home currency they need to cover amount_usd.
     """
+    if today_rate == 0 or optimal_rate == 0:
+        return 0.0
     cost_today   = amount_usd * today_rate
     cost_optimal = amount_usd * optimal_rate
     savings_home_currency = cost_today - cost_optimal
 
     # Convert savings back to USD for a universal display value
-    savings_usd = savings_home_currency / optimal_rate if optimal_rate else 0
+    savings_usd = savings_home_currency / today_rate
     return round(max(0.0, savings_usd), 2)
 
 

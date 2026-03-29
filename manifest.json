@@ -19,6 +19,6 @@
     "js": ["content.js"]
   }],
   "action": {
-    "default_popup": "popup/popup.html"
+    "default_popup": "popup.html"
   }
 }
