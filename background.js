@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function fetchAndSchedule(settings) {
     try {
         const { currency, amount, deadline, days } = settings;
-        console.log('RateReady: fetching with settings', { currency, amount, deadline, days });
+        console.log('Kairos: fetching with settings', { currency, amount, deadline, days });
         const res = await fetch(
             `${API_URL}/best-day?currency=${currency}&amount=${amount}&deadline=${deadline}&days_ahead=${days}`
         );
@@ -45,7 +45,7 @@ async function fetchAndSchedule(settings) {
         chrome.alarms.create('optimalDay', { when: alarmTime.getTime() });
 
     } catch (err) {
-        console.error('RateReady: failed to fetch prediction', err);
+        console.error('Kairos: failed to fetch prediction', err);
     }
 }
 
@@ -57,7 +57,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
         chrome.notifications.create({
             type:    'basic',
             iconUrl: 'icons/icon.png',
-            title:   'RateReady — Today is your best day to pay',
+            title:   'Kairos — Today is your best day to pay',
             message: `Predicted rate: ${recommendation.predictedRate}. ` +
                 `Estimated savings: $${recommendation.savings}. ` +
                 `Open your payment portal now.`,

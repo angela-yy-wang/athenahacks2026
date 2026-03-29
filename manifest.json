@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "RateReady",
+  "name": "Kairos",
   "description": "Find the best day to pay your tuition",
   "version": "1.0",
   "permissions": [
@@ -9,13 +9,13 @@
     "notifications"
   ],
   "host_permissions": [
-    "https://*.edu/*"
+    "https://*.cashnet.com/*", "https://pay.flywire.com/*"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [{
-    "matches": ["https://*.edu/*"],
+    "matches": ["https://*.cashnet.com/*", "https://pay.flywire.com/*"],
     "js": ["content.js"]
   }],
   "action": {

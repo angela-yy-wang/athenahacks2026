@@ -1,2 +1,3 @@
-# athenahacks2026
-Repo for our Athenahacks submission
+# Kairos
+Authors: Katherine Mandel, Angela Wang, and Tiffany Chen <br />
+<>

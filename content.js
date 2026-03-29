@@ -19,11 +19,19 @@ function injectBanner(rec) {
     banner.id = 'rateready-banner';
     banner.style.cssText = `
     position: fixed; top: 0; left: 0; right: 0; z-index: 999999;
-    background: ${isToday ? '#16a34a' : '#4f46e5'};
-    color: white; padding: 10px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-    font-family: sans-serif; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  `;
+  background: ${isToday ? '#000' : '#111'};
+  color: white;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 2px solid ${isToday ? '#16a34a' : '#fff'};
+  box-shadow: none;
+`;
 
     const message = isToday
         ? `Today is your optimal day to pay! Predicted rate: ${rec.predictedRate} ${rec.currency}/USD — est. savings $${rec.savings}`
@@ -32,12 +40,13 @@ function injectBanner(rec) {
     banner.innerHTML = `
     <span>${message}</span>
     <button onclick="document.getElementById('rateready-banner').remove()"
-      style="background:transparent;border:1px solid rgba(255,255,255,0.5);
-             color:white;padding:4px 10px;border-radius:4px;cursor:pointer;
-             font-size:12px;margin-left:16px;">
+      style="background:transparent;border:2px solid rgba(255,255,255,0.4);
+             color:white;padding:4px 14px;border-radius:0;cursor:pointer;
+             font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+             margin-left:16px;font-weight:700;">
       Dismiss
     </button>
-  `;
+`;
 
     document.body.prepend(banner);
     // Push page content down so banner doesn't cover it

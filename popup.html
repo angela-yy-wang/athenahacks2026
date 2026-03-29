@@ -2,30 +2,125 @@
 <html>
 <head>
     <style>
-        body { font-family: sans-serif; padding: 16px; width: 280px; }
-        label { display: block; margin-top: 12px; font-size: 13px; color: #555; }
-        input, select { width: 100%; padding: 6px 8px; margin-top: 4px;
-            border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
-        button { margin-top: 16px; width: 100%; padding: 8px;
-            background: #4f46e5; color: white; border: none;
-            border-radius: 6px; cursor: pointer; font-size: 14px; }
-        #status { margin-top: 8px; font-size: 12px; color: green; display: none; }
+        body {
+            font-family: sans-serif;
+            padding: 16px;
+            width: 300px;
+            background: #f5f5f5;
+            color: #111;
+        }
+        h3 { margin: 0 0 2px; font-size: 16px; letter-spacing: 0.05em; text-transform: uppercase; }
+        p  { font-size: 11px; color: #888; margin: 0 0 14px; }
+        label { display: block; margin-top: 12px; font-size: 11px; color: #555;
+            letter-spacing: 0.05em; text-transform: uppercase; }
+        input, select {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 4px;
+            border: 2px solid #000;
+            border-radius: 0;
+            font-size: 13px;
+            background: #fff;
+            box-sizing: border-box;
+            appearance: none;
+            -webkit-appearance: none;
+            letter-spacing: 0.03em;
+            outline: none;
+            transition: background 0.2s;
+        }
+        input:focus, select:focus {
+            background: #f0f0f0;
+        }
+        #status { margin-top: 10px; font-size: 11px; color: #16a34a;
+            display: none; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .fancy {
+            background-color: transparent;
+            border: 2px solid #000;
+            border-radius: 0;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-top: 18px;
+            outline: none;
+            overflow: visible;
+            padding: 1.25em 2em;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            user-select: none;
+            font-size: 13px;
+        }
+        .fancy::before {
+            content: " ";
+            width: 1.5625rem;
+            height: 2px;
+            background: black;
+            top: 50%;
+            left: 1.5em;
+            position: absolute;
+            transform: translateY(-50%);
+            transform-origin: center;
+            transition: background 0.3s linear, width 0.3s linear;
+        }
+        .fancy .text {
+            font-size: 1.125em;
+            line-height: 1.33333em;
+            padding-left: 2em;
+            display: block;
+            text-align: left;
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: black;
+        }
+        .fancy .top-key {
+            height: 2px; width: 1.5625rem;
+            top: -2px; left: 0.625rem;
+            position: absolute;
+            background: #f5f5f5;
+            transition: width 0.5s ease-out, left 0.3s ease-out;
+        }
+        .fancy .bottom-key-1 {
+            height: 2px; width: 1.5625rem;
+            right: 1.875rem; bottom: -2px;
+            position: absolute;
+            background: #f5f5f5;
+            transition: width 0.5s ease-out, right 0.3s ease-out;
+        }
+        .fancy .bottom-key-2 {
+            height: 2px; width: 0.625rem;
+            right: 0.625rem; bottom: -2px;
+            position: absolute;
+            background: #f5f5f5;
+            transition: width 0.5s ease-out, right 0.3s ease-out;
+        }
+        .fancy:hover { color: white; background: black; }
+        .fancy:hover::before { width: 0.9375rem; background: white; }
+        .fancy:hover .text { color: white; padding-left: 1.5em; }
+        .fancy:hover .top-key { left: -2px; width: 0px; }
+        .fancy:hover .bottom-key-1,
+        .fancy:hover .bottom-key-2 { right: 0; width: 0; }
     </style>
 </head>
 <body>
-<h3 style="margin:0 0 4px">RateReady</h3>
-<p style="font-size:12px;color:#888;margin:0 0 12px">
-    Get notified when exchange rates favor your tuition payment.
-</p>
+
+<h3>Kairos</h3>
+<p>Get notified when rates favor your tuition payment.</p>
 
 <label>Home currency
     <select id="currency">
-        <option value="INR">INR — Indian Rupee</option>
-        <option value="CNY">CNY — Chinese Yuan</option>
-        <option value="KRW">KRW — South Korean Won</option>
-        <option value="BRL">BRL — Brazilian Real</option>
-        <option value="NGN">NGN — Nigerian Naira</option>
-        <option value="MXN">MXN — Mexican Peso</option>
+        <option value="MXN">Mexican Peso (MXN)</option>
+        <option value="BRL">Brazilian Real (BRL)</option>
+        <option value="TRY">Turkish Lira (TRY)</option>
+        <option value="INR">Indian Rupee (INR)</option>
+        <option value="KRW">South Korean Won (KRW)</option>
+        <option value="CNY">Chinese Yuan (CNY)</option>
     </select>
 </label>
 
@@ -41,7 +136,13 @@
     <input type="number" id="days" value="30" min="7" max="60" />
 </label>
 
-<button id="save">Save & get recommendation</button>
+<button class="fancy" id="save">
+    <span class="top-key"></span>
+    <span class="text">Get recommendation</span>
+    <span class="bottom-key-1"></span>
+    <span class="bottom-key-2"></span>
+</button>
+
 <div id="status">Saved! Check the payment portal for your recommendation.</div>
 
 <script src="popup.js"></script>
