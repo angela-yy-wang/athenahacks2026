@@ -7,7 +7,10 @@ Exchange rates change daily. For international students paying large sums like t
 
 ## How it works
 
-
+1) Install the extension and enter your home currency, tuition amount, and payment deadline
+2) Our ML model (Prophet) fetches real historical exchange rate data and forecasts the next 30–60 days
+3) The extension shows a banner on your payment portal telling you the best day to pay and how much you could save
+4) You decide when to pay, we just give you the information to make a smarter choice
 
 ---
 
