@@ -100,7 +100,7 @@ def best_day(
         raise HTTPException(status_code=400, detail="No forecast dates within window")
 
     # Highest predicted rate = student's currency is strongest = cheapest day to pay
-    best        = upcoming.loc[upcoming["yhat"].idxmax()]
+    best        = upcoming.loc[upcoming["yhat"].idxmin()]
     today_row   = upcoming.iloc[0]
     today_rate  = float(today_row["yhat"])
     optimal_rate = float(best["yhat"])

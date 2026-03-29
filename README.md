@@ -25,16 +25,17 @@ Layer | Tech
 
 ## Setup
 
-Run API:
+
+Run API in Terminal:
 ```
-cd api
-pip install fastapi uvicorn prophet pandas requests "numpy<2.0"
+cd kairos
+python3 -m venv venv 
+source venv/bin/activate
+pip install fastapi uvicorn prophet pandas requests
 uvicorn predict:app --reload
 ```
-
-Confirm it's running at `http://127.0.0.1:8000`
-
-Test it:
+You should see `INFO: Uvicorn running on http://127.0.0.1:8000` in terminal. 
+<br/><br/>Confirm it's running at `http://127.0.0.1:8000`:
 ```
 http://127.0.0.1:8000/best-day?currency=INR&amount=8000&days_ahead=30
 ```
@@ -43,7 +44,7 @@ http://127.0.0.1:8000/best-day?currency=INR&amount=8000&days_ahead=30
 
 1. Open Chrome → `chrome://extensions`
 2. Enable **Developer mode** (top right)
-3. Click **Load unpacked** → select this repo folder
+3. Click **Load unpacked** → select this repo folder (exclude \_\_pycache__ or venv folders)
 4. Pin the Kairos icon to your toolbar
 
 ### 3. Use it

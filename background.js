@@ -66,17 +66,26 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 });
 
 function calculateSavings(amountUSD, data) {
-    // How much more of the home currency is needed at today's rate vs optimal
-    // data.predicted_rate is home/USD (e.g. INR per 1 USD)
-    // Higher rate = student's currency is stronger = cheaper for them
-    // This is a simplified estimate
-    const today     = data["today_rate"];
-    console.log('today: ', data["today_rate"]);
-    const optimal   = data["predicted_rate"];
-    console.log('optimal: ', optimal);
-    const diff      = optimal - today;
-    console.log('diff: ', diff);
-    const savings   = (diff / today) * amountUSD;
-    console.log('savings: ', savings);
-    return Math.max(0, savings);
+    // Rates are USD → home currency (e.g. 1 USD = 83.2 INR)
+    // LOWER rate = student's currency is stronger = cheaper to pay
+    // Savings = how much less home currency they spend vs paying today
+    const today   = data["today_rate"];
+    const optimal = data["predicted_rate"];
+
+    console.log('today rate (USD→home):', today);
+    console.log('optimal rate (USD→home):', optimal);
+
+    // Cost in home currency at each rate
+    const costToday   = amountUSD * today;
+    const costOptimal = amountUSD * optimal;
+
+    // Positive savings means optimal day is cheaper
+    const savingsHomeCurrency = costToday - costOptimal;
+    console.log('savings in home currency:', savingsHomeCurrency);
+
+    // Convert back to USD so the banner always shows a $ figure
+    const savingsUSD = savingsHomeCurrency / optimal;
+    console.log('savings in USD:', savingsUSD);
+
+    return Math.max(0, savingsUSD);
 }
