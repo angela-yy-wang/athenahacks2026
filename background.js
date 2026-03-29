@@ -39,10 +39,16 @@ async function fetchAndSchedule(settings) {
                 deadline:       settings.deadline,
             }});
 
-        const alarmTime = new Date(data.best_date);
-        alarmTime.setHours(9, 0, 0, 0);
+        const [year, month, day] = data.best_date.split('-').map(Number);
+        const alarmTime = new Date(year, month - 1, day, 9, 0, 0, 0);
+
+        if (isNaN(alarmTime.getTime())) {
+            console.error('Kairos: could not parse best_date:', data.best_date);
+            return;
+        }
+
         chrome.alarms.clear('optimalDay');
-        chrome.alarms.create('optimalDay', { when: alarmTime.getTime() });
+        chrome.alarms.create('optimalDay', { when: alarmTime.getTime() });;
 
     } catch (err) {
         console.error('Kairos: failed to fetch prediction', err);
