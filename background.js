@@ -17,10 +17,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function fetchAndSchedule(settings) {
     try {
         const { currency, amount, deadline, days } = settings;
+        console.log('RateReady: fetching with settings', { currency, amount, deadline, days });
         const res = await fetch(
             `${API_URL}/best-day?currency=${currency}&amount=${amount}&deadline=${deadline}&days_ahead=${days}`
         );
         const data = await res.json();
+
+        // Use server savings if available, fall back to client calculation
+        const number = calculateSavings(amount, data);
+        const savings = parseFloat(number.toFixed(2));
+        console.log('rounded savings: ', savings);
 
         await chrome.storage.local.set({ recommendation: {
                 bestDate:       data.best_date,
@@ -28,7 +34,7 @@ async function fetchAndSchedule(settings) {
                 confidenceLow:  data.confidence_low,
                 confidenceHigh: data.confidence_high,
                 todayRate:      data.today_rate,      // new field
-                savings:        data.savings_usd,     // now comes from server
+                savings:        savings,     // now comes from server
                 currency:       data.currency,
                 deadline:       settings.deadline,
             }});
@@ -64,9 +70,13 @@ function calculateSavings(amountUSD, data) {
     // data.predicted_rate is home/USD (e.g. INR per 1 USD)
     // Higher rate = student's currency is stronger = cheaper for them
     // This is a simplified estimate
-    const today     = data.forecast[0]?.yhat ?? data.predicted_rate;
-    const optimal   = data.predicted_rate;
+    const today     = data["today_rate"];
+    console.log('today: ', data["today_rate"]);
+    const optimal   = data["predicted_rate"];
+    console.log('optimal: ', optimal);
     const diff      = optimal - today;
-    const savings   = Math.round((diff / today) * amountUSD);
+    console.log('diff: ', diff);
+    const savings   = (diff / today) * amountUSD;
+    console.log('savings: ', savings);
     return Math.max(0, savings);
 }
